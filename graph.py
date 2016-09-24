@@ -16,7 +16,7 @@ class Graph(object):
         self.nodes.add(node2)
 
     def __str__(self):
-        return '{}({})'.format(self.__class__.__name__, dict(self.edges))
+        return '{}'.format(dict(self.edges))
 
     def __repr__(self):
         return str(self)
@@ -139,7 +139,7 @@ class Graph(object):
             if node not in visited:
                 self.topologicalSortUtil(node, visited, stack)
 
-        return stack[::-1]
+        return stack
 
     def dijkstra(self, start, end):
         visited = set()
@@ -253,18 +253,22 @@ f = Order("f");
 
 packageDependecies = set()
 #a depends on b
-packageDependecies.add((b,a));
-packageDependecies.add((c,b));
-packageDependecies.add((d,c));
-packageDependecies.add((f,c));
-packageDependecies.add((e,d));
+packageDependecies.add((a,b));
+packageDependecies.add((b,c));
+packageDependecies.add((c,d));
+packageDependecies.add((c,f));
+packageDependecies.add((d,e));
 
 
 graph = Graph(True)
 for node1, node2 in packageDependecies:
     graph.add_edge(node1, node2)
 
-print graph.topologicalSort()
+
+if graph.isCyclic():
+    print "Cyclic Dependencies"
+else:
+    print graph.topologicalSort()
 
 #############################################################################
 
